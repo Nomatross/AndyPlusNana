@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Fact</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+            color: #333;
+            background-image: url('https://i.imgur.com/BeQgucz.jpeg'); /* Replace this URL with your image link */
+            background-size: cover; /* Ensures the image covers the entire viewport */
+            background-position: center; /* Centers the image in the viewport */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+        
+        }
+        .fact-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8); /* Adds a semi-transparent white background for text readability */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0 0 20px;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 0 0 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="fact-container">
+        <h1>Today's Fact</h1>
+        <p id="fact"></p>
+        <button id="translate-button">Translate to Japanese</button>
+    </div>
+
+    <script>
+        // Array of facts
+        const facts = [
+            "When I was a child, my favorite color was purple. But I was embarassed because I thought it was a girly color, so I would tell people I really liked blue or green.",
+            "I have a slight fear of holding wine glasses because when I was a child, one shattered in my hand and I had to get stitches.",
+            "I have a hairy butt.",
+            "I've visited the following countries: America, Japan, South Korea, Costa Rica, Germany, Austria, The Netherlands, France, and Belgium.",
+            "As a baby, I was so fat that people did not know what my ethnicity was.",
+            "I tried to run away from home when I was 15, but I didn't take anything with me so I ended up going home after a couple hours.",
+                "I met the famous American rapper named 50 Cent.",
+            "I've attended countless concerts, and I have seen over 100 different artists perform. Including Elton John, One OK Rock, Linkin Park, and many more.",
+            "The number one thing on my bucket list is to go cage-diving in the ocean with Great White Sharks.",
+            "In elementary school, I was obsessed with Sonic The Hedgehog. I had tons of merchandise and a YouTube channel dedicated to the franchise.",
+            "I am a huge fan of The Lord of The Rings, and in the past I would sit down and watch the entire trilogy in one day at least once every year or two.",
+            "When I was studying acting, I studied Tom Holland's performance as Spider-Man, and it was my dream to be in a Marvel movie.",
+            "There was a brief period where I wanted to learn how to play the violin, so I ordered a cheap one off of Amazon, I had nobody to teach me how to play so I gave up.",
+            "In high school, I would post playthroughs of Pokemon games on my YouTube channel. These videos are still accessible, but they are very embarassing.",
+            "My first job was setting up bouncy castles. I do not know if you have these in Japan, but they are giant inflatable structures that kids can jump and play in.",
+            "I love horror movies. I have seen so many horror movies across many genres!",
+            "When I was a child, I was afraid of everything, especially scary movies. I was so afraid of Chucky from the Child's Play movies that I refused to enter into any stores that sold movies because I was so afraid of seeing the movie case.",
+            "I used to live in a house that was extremely haunted.",
+            "Growing up, I wanted to be a marine biologist.",
+            "I have an array of phobias, including claustrophobia, a fear of heights, a fear of the ocean, a fear of spiders, and a few others. However, I like to challenge my fears by doing things that give me an opportunity to conquer these fears.",
+            "I love to bake. Every year for my mom's birthday, I would bake her peanut butter cookies from scratch.",
+            "The best Christmas gift I ever received was a Nintendo Wii. The reason was because the Nintendo Wii was nearly impossible to find because everyone was purchasing them. I didn't think I would receive one that year, but when I opened up the gift and saw the Wii, I was so excited that I screamed.",
+            "I've broken two bones: my right arm and the smallest toe on my right foot.",
+            "I have a few scars on my body, such as a scar on my right knee from a time when I fell and cut it, or a scar under my chin that I received in a swimming pool.",
+            "Before I moved to Japan, I was considering getting a few tattoos.",
+            "In 2023, I entered a rap competition online with several thousand participants. I almost made it to the final round, but they said because my microphone quality was bad they couldn't put me in the final round.",
+            "I have dated very few people, even though growing up I had crushes on many different girls. The only girl I have ever been confident that I would marry is you.",
+            "As an adult, I once pooped my pants in a movie theater. It is a very long and embarassing story, but you can ask me about it.",
+            "Despite my severe fear of heights, in 2020 I had a job inspecting roofs. I hated it lol.",
+            "I was a member of my school's chess club.",
+            "In 11th grade, I had a big crush on a girl so I was going to sing a song dedicated to her at the school talent show. Thank God that I did not do that LOL.",
+            "In my school's talent show, I showed off a talent I have called 'pen tapping.' It is essentially playing the drums but with pens on a table. I'll show you sometime!",
+            "I am pretty flexible. When I was young, I was extremely flexible, but now my flexibility is mostly in my arms. I can dislocate my shoulders on command, I can lick my elbows, and twist my arms backwards behind my head. I'll show you next time!",
+            "My friends and my older brother and I would build pretty impressive forts in the wooded area near our house.",
+            "At the entrance to the wooded area we would play in, one time my older brother climbed down a manhole and stuffed the small passageway at the bottom with sticks. The next day, the entire entrance to the wooded area was flooded with sewage.",
+            "Growing up, we had a family dog named Comet. He was a golden retriever. He was the sweetest dog ever.",
+            "I have had kidney stones three separate times.",
+            "I've visited less than half of the states in America. I believe I have visited 23 states, if you do not include airports.",
+            "I'm a pretty introverted person unless I'm in specific environments. I always make friends with strangers when I attend concerts or Pokemon tournaments.",
+            "I almost died shortly after I was born. My bellybutton became infected from the umbelical cord around a week after I was born, and I developed sepsis. It is a miracle that I survived.",
+            "I can do a pretty good impression of Kermit The Frog, if you're familiar with that character from the Muppets.",
+            "Currently, I don't watch much anime. I read manga a decent amount, but not too much. However, until I moved to Japan I watched a huge amount of anime.",
+            "My ancestry is largely Swedish. Most of my ancestors came from Sweden, while smaller percentages come from Ireland, Germany, and Native American. I'm only around 93.7% European ancestry. I'm about 6.3% Native American Indian.",
+            "I'm learning how to program again. For example, programming this website. I want to work on creating a small game with a few friends of mine, and I'm currently programming a small game for the children I  teach on Sunday nights.",
+            "Even though I am allergic to eggs, I absolutely love the holiday drink 'Egg Nog.' Have you had it? It's a very thick, sweet drink that is only sold around Christmas time in America. It upsets my stomach when I drink, but I always drink a lot of it in America haha.",
+            "My mom is originally from New Jersey, and my dad is originally from North Carolina. Because my mom and her family are from the North Eastern United States, I've adopted a northeastern accent on certain words that I say.",
+            "The town that I grew up in is a very small town in South Carolina called 'Edgefield' and my hometown produces more peaches than anywhere else in America.",
+            "I've always thought Japanese women were beautiful, but to be honest your beauty is far greater than anything I have ever seen before. That is my real feeling.",
+            "My favorite Pokemon are Starmie, Scrafty, Omastar, Blastoise. Rotom-Wash, Chandelure, Conkeldurr, and Hydreigon.",
+            "As a little kid, I played baseball and soccer. Later, I would play basketball, baseball, and martial arts.",
+            "Before I had many friends in the competitive Pokemon community, I would often travel to tournaments out of state and stay with people that I had only met online.",
+            "I used to want to get my ears pierced.",
+            "There was a brief period of time where I learned how to make hip hop instrumentals.",
+            "I have wanted to write a novel for a long time, and I have had ideas for a novel, but I have not found the time or motivation to actually sit down and write an entire novel.",
+            "For some reason, in the past I have had several gay men flirt with me. It was always very awkward LOL.",
+            "In 2015, I was at a national Pokemon tournament in Indianapolis, Indiana and my friends and I played some pretty crazy games. I had never met these people in person before the weekend, but we played a game where we're blindfolded and dropped off in a random place in pairs of two. We then have to figure out where we are and tell our driver so they can come pick us up. But we got dropped off in a dangerous neighborhood on July 4th, so it was kind of scary haha.",
+            "Do you remember when I was rooming with Calvin during my visit to mainland? He snored so loudly that on the night before I met you at church, I slept on the bathroom floor.",
+            "I always hated my name growing up, and I wanted to change it.",
+            "I once had a panic attack that was so severe, I thought I was having a heart attack so I had to call an ambulance.",
+            "My favorite restaurants back home are Shake Shack, and a fast food chain in the southeast US called 'Bojangles,' that serves delicious fried chicken. I also love a restaurant called Culvers!",
+            "One time, while working as a pizza delivery driver I accidentally ran over a customer's pizza with my car.",
+            "One time, I walked into a Walmart to use the restroom and an employee approached me to offer me $15 to clean up poop in one of the store aisles.",
+            "Since December 2016, I lived with my Aunt Loretta and my Uncle Dale. Their only child is my cousin, and we are close friends. However, my cousin who was born as a female is transgender and identifies as a male. It is pretty difficult to handle from a Christian perspective.",
+            "Because most of my friends come through Pokemon tournaments, they are spread out all over the country and the world. I do not get to see them often, but through the app 'Discord,' I communicate with them every day! And I organize different events, such as Secret Santa, to help us all stay connected.",
+        ];
+
+        // Function to get a random, non-repeating fact for the day
+        function getDailyFact(facts) {
+            const date = new Date();
+            const dayOfYear = Math.floor(
+                (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - 
+                Date.UTC(date.getFullYear(), 0, 0)) / 86400000
+            );
+            return facts[dayOfYear % facts.length];
+        }
+
+        // Display the fact
+        const fact = getDailyFact(facts);
+        document.getElementById("fact").textContent = fact;
+
+        // Translate button functionality
+        document.getElementById("translate-button").addEventListener("click", () => {
+            const encodedFact = encodeURIComponent(fact);
+            const translateURL = `https://translate.google.com/?sl=en&tl=ja&text=${encodedFact}&op=translate`;
+            window.open(translateURL, "_blank");
+        });
+    </script>
+</body>
+</html>
